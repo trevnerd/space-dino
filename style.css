@@ -1,4 +1,8 @@
-body { /*universal selector*/
+* {
+    user-select: none; /* Standard */
+}
+
+body {
     
     margin: 20;
     /* background-color: rgb(219, 137, 137); */
