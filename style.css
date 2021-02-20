@@ -1,0 +1,88 @@
+body { /*universal selector*/
+    
+    margin: 20;
+    /* background-color: rgb(219, 137, 137); */
+    background: url("space_christina.gif");
+}
+
+h1
+{
+    padding-top: 100px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+h2
+{
+    padding-top: 10px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+/*
+p
+{
+    font: initial;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+} 
+*/
+
+#character
+{
+    /* content: "test"; */
+    width: 20px;
+    height: 50px;
+    background-color: rgb(0, 153, 255); 
+    background: url("cat.jpg");
+    position: relative;
+    top: 100px;
+    left: 380px;
+}
+
+#game-back
+{
+    position: relative;
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+}
+
+ #game
+{ /*game board */
+    position: relative;
+    margin: auto;
+    top: 50px;
+    width: 500px;
+    height: 500px;
+    border: 1px dashed rgb(219, 137, 137);
+}
+
+#dino
+{
+    width: 20px;
+    height: 30px;
+    background-color: greenyellow;
+    position: absolute;
+    left: 0px;
+}
+
+/* animation gradient */
+/* body {
+    opacity: 0.6;
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+} */
