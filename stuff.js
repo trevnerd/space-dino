@@ -23,7 +23,7 @@
 
 var dino = {
     jq: $('#dino'),
-    velocity: {
+    velocity: { // in px / 10 ms
         x: 0, // positive = to the right
         y: 0 // positive = up
     },
@@ -35,19 +35,27 @@ var dino = {
     {
         return this.jq.height();
     },
-    get x()
+    get x() // relative to game 
     {
-        return this.jq.position().x;
+        return this.jq.position().left;
     },
     get y()
     {
-        return this.jq.position().y;
+        return this.jq.position().top;
     },
-    move(up, right)
+    get xCenter() // relative to window
     {
-        this.jq.offset({top: this.y-up, left: this.x+right});
+        return this.jq.offset().left+(this.width/2);
     },
-    moveTo(x, y) // relative to screen
+    get yCenter()
+    {
+        return this.jq.offset().top+(this.height/2);
+    },
+    move(down, right)
+    {
+        this.jq.offset({top: this.jq.offset().top+down, left: this.jq.offset().left+right});
+    },
+    moveTo(x, y) // relative to game
     {
         let new_y = game.offset().top+y;
         let new_x = game.offset().left+x;
@@ -64,6 +72,8 @@ function makeEnemy()
     
     //set enemy position/details
     //img.style.left="1px";
+
+    //appending to the board
     document.getElementById('game').appendChild(img);
 }
 
@@ -73,9 +83,17 @@ $(document).ready(function() {//when the doc loads
 });
 
 document.addEventListener('click', function(e){
-    console.log("shoot")
+    // have a velocity vector in the opposite direction of the click
+    let x_portion = dino.xCenter - e.x; 
+    let y_portion = dino.yCenter - e.y;
+    let x_comp = x_portion/Math.sqrt(x_portion*x_portion+y_portion*y_portion);
+    let y_comp = y_portion/Math.sqrt(x_portion*x_portion+y_portion*y_portion);
+    let vel_coef = 1;
+    dino.velocity.x += x_comp * vel_coef;
+    dino.velocity.y += y_comp * vel_coef;
 })
 
-// document.addEventListener('mousemove', function(e){
-//     console.log(e.x, e.y);
-// })
+setInterval(function(){
+    console.log(dino.velocity.y)
+    dino.move(dino.velocity.y, dino.velocity.x);
+}, 10);
