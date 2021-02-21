@@ -1,15 +1,7 @@
 
 // TODO
-// game board
-//     christina is making a GIF space background - in css file
-// character
-//     if move off screen, can wrap around
-//     code as wrap around BUT we should see if it's nice 
-//         if not, we can just comment it out
-// lasers bullets
-//  /
 // enemies
-//     have the collistion end the game or lose life
+//     make the collision with player be better
 
 // power ups - LAST PRIORITY??
 //     garbage :) like literal space trash
@@ -18,6 +10,11 @@
 // end game
 //     3 lives? - seagulls charge you to kill you x_x
 //     1 hit 1 kill
+
+//velocity constants
+const dino_vel_coeff = -2.0;
+const proj_vel_coeff = 15;
+const enemy_vel_coeff = 10;
 
 class GameElement {
     constructor(jquery_obj)
@@ -69,6 +66,18 @@ class GameElement {
                 this.y+this.height < ele.y || 
                 this.y > ele.y+ele.height);
     }
+
+    setDirectionImage()
+    {
+        if(this.velocity.x >= 0)
+        {
+            this.jq.attr('src', 'dino_right.gif');
+        }
+        else
+        {
+            this.jq.attr('src', 'dino_left.gif');
+        }
+    }
 }
 
 class Projectile extends GameElement{
@@ -99,6 +108,7 @@ class Enemy extends GameElement{
         this.jq.offset({top: game.offset().top+center_start_y, left: game.offset().left+center_start_x});
         this.velocity.x = vel_x;
         this.velocity.y = vel_y;
+        this.jq.attr('src', 'spacegull_right.gif');
         this.setDirectionImage();
     }
 
@@ -106,11 +116,11 @@ class Enemy extends GameElement{
     {
         if(this.velocity.x >= 0)
         {
-            this.jq.attr('src', 'spacegull_right.gif');
+            this.jq.css('transform', 'scaleX(1)');
         }
         else
         {
-            this.jq.attr('src', 'spacegull_left.gif');
+            this.jq.css('transform', 'scaleX(-1)');
         }
     }
 }
@@ -121,6 +131,7 @@ var dino = new GameElement($('#dino'));
 document.getElementById('dino').style.zIndex = 100;
 var game = $('#game');
 var score = 0;
+var highscore = 0;
 var isResetting = false;
 //gameblockers
 function drawBoarders()
@@ -171,17 +182,16 @@ document.addEventListener('click', function(e){
     let y_portion = e.pageY - dino.yCenter;
     let x_comp = x_portion/Math.sqrt(x_portion*x_portion+y_portion*y_portion);
     let y_comp = y_portion/Math.sqrt(x_portion*x_portion+y_portion*y_portion);
-    let dino_vel_coef = -2.0;
-    dino.velocity.x += x_comp * dino_vel_coef;
-    dino.velocity.y += y_comp * dino_vel_coef;
+    dino.velocity.x += x_comp * dino_vel_coeff;
+    dino.velocity.y += y_comp * dino_vel_coeff;
 
     //shoot projectile
-    let proj_vel_coeff = 15;
     proj_list.push(new Projectile(dino.x+(dino.width/2), dino.y+(dino.height/2), x_comp*proj_vel_coeff, y_comp*proj_vel_coeff));
 })
 
 //enemy creation loop
 setInterval(function(){
+    if(isResetting) return;
     let enemy = new Enemy();
     let side = Math.floor(Math.random()*4);
     let dist = Math.random()*(game.width()+enemy.width); // assuming the game width and height are the same
@@ -208,18 +218,19 @@ setInterval(function(){
         enemy.moveTo(game.width(), -enemy.height+dist);
         vel_x = -1;
     }
-    let enemy_vel_coeff = 5;
+    
     enemy.velocity.x = vel_x * enemy_vel_coeff;
     enemy.velocity.y = vel_y * enemy_vel_coeff;
 
     enemy.setDirectionImage();
     enemy_list.push(enemy);
     //enemy_list.push(new Enemy(Math.random()*game.width(), Math.random()*game.height()));
-}, 3000);
+}, 1300);
 
 
 //Game Loop
 setInterval(function(){
+    if(isResetting) return;
     drawBoarders();
     //console.log(dino.velocity.x, dino.velocity.y);
     dino.move(dino.velocity.y, dino.velocity.x);
@@ -230,10 +241,10 @@ setInterval(function(){
     || dino.y > game.height())
     {
         //background becomes GAME OVER
-        reset();
+        //drawGameOver();
+        reset(true);
     }
     
-
     for(let i=0; i < proj_list.length; ++i)
     {
         //check if exits screen
@@ -249,23 +260,36 @@ setInterval(function(){
             --i;
             continue;
         }
+
         //move projectile
         proj_list[i].move(proj_list[i].velocity.y, proj_list[i].velocity.x);
     }
     for(let i = 0; i < enemy_list.length; ++i)
     {
-        if(enemy_list[i].x+enemy_list[i].width < 0
-        || enemy_list[i].x > game.width()
-        || enemy_list[i].y+enemy_list[i].height < 0
-        || enemy_list[i].y > game.height())
-        {
-            //remove from screen
-            enemy_list[i].jq.remove();
-            //remove from array
-            enemy_list.splice(i, 1);
-            --i;
-            continue;
-        }
+        // if(enemy_list[i].x+enemy_list[i].width < 0
+        // || enemy_list[i].x > game.width()
+        // || enemy_list[i].y+enemy_list[i].height < 0
+        // || enemy_list[i].y > game.height())
+        // {
+            
+        //     //remove from screen
+        //     enemy_list[i].jq.remove();
+        //     //remove from array
+        //     enemy_list.splice(i, 1);
+        //     --i;
+        //     continue;
+        // }
+
+        // change velocities (make the vector point to the dino)
+        let x_portion = dino.xCenter - enemy_list[i].xCenter;
+        let y_portion = dino.yCenter - enemy_list[i].yCenter;
+        let x_comp = x_portion/Math.sqrt(x_portion*x_portion+y_portion*y_portion);
+        let y_comp = y_portion/Math.sqrt(x_portion*x_portion+y_portion*y_portion);
+        enemy_list[i].velocity.x = x_comp * enemy_vel_coeff;
+        enemy_list[i].velocity.y = y_comp * enemy_vel_coeff;
+        
+        enemy_list[i].setDirectionImage();
+        //move enemy
         enemy_list[i].move(enemy_list[i].velocity.y, enemy_list[i].velocity.x);
     }
 
@@ -294,19 +318,18 @@ setInterval(function(){
         if(dino.overlapsWith(enemy_list[i])) // d e a t h :O
         {
             //background becomes GAME OVER
-            reset();
+            //drawGameOver();
+            reset(true);
         }
     }
 
 }, 33); // about 30 fps
 
-function reset()
+function reset(onDeath)
 {
     isResetting = true;
-    dino = new GameElement($('#dino'));
     dino.moveTo(game.width()/2, game.height()/2);
-    score = 0;
-    updateScore()
+    dino = new GameElement($('#dino'));
     for(let i=0; i < proj_list.length; ++i)
     {
         //remove from screen
@@ -319,15 +342,30 @@ function reset()
     }
     proj_list = [];
     enemy_list = [];
-    setTimeout(function()
-    {
+
+    dino.jq.hide()
+    let image = document.createElement("img");
+    image.src = "gameover.png";
+    //image.width = "500px";
+    game.append(image);
+
+    if (score > highscore) {
+        highscore = score;
+        document.getElementById('highscore').innerHTML = 'HIGH SCORE: ' + highscore;
+    }
+
+    document.addEventListener('keypress', function(e) { //press any play to play again
+        score = 0;
+        updateScore()
+        $(image).remove();
+        dino.jq.show();
         isResetting = false;
-    }, 100)
+    });
 }
 
 function updateScore()
 {
-    document.getElementById('score').innerHTML = 'Score: '+ score;
+    document.getElementById('score').innerHTML = 'SCORE: '+ score;
 }
 
 document.addEventListener('mousemove', function(e){

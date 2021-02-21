@@ -20,14 +20,14 @@ img {
 body 
 {    
     margin: 10;
-    background-color: rgb(219, 137, 137);
+    background-color: rgb(64, 87, 130);
     /* background: url("space_christina.gif"); */
 }
 
 h1
 {
     position: relative;
-    padding-top: 100px;
+    padding-top: 50px;
     color: rgb(255, 255, 255);
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
@@ -46,7 +46,16 @@ h2
 h3
 {
     position: relative;
-    padding-top: 10px;
+    padding-top: 5px;
+    color: white;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h4
+{
+    position: relative;
+
     color: white;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
@@ -69,14 +78,15 @@ button {
     left: 350px; */
     /* padding-top: 10px;
     padding-bottom: 10px; */
-    background-color: rgb(2, 4, 23);
-    border: 2px solid rgb(255, 254, 254);
-    width: 100px;
-    height: 40px;
+    /* border: 1px solid rgb(219, 137, 137); */
+    width: 80px;
+    height: 33px;
     /* padding: 10px 30px; */
+    border: 0px solid rgb(123, 185, 219);
     transition: all 0.2s ease-in-out;
     margin-bottom: 10px;
-    /* background: url("https://imgflip.com/s/meme/Blank-Nut-Button.jpg"); */
+    background: url("restart.png");
+    background-size: contain;
 }
 
 .above-boarders {
@@ -105,7 +115,7 @@ button {
 }
 .game-block {
     z-index: 1000;
-    background-color: rgb(219, 137, 137);
+    background-color: rgb(100, 136, 204);
     position: absolute;
 }
 
@@ -127,4 +137,12 @@ button {
     top: 5px;
     left: 10px;
 }
-
+#highscore
+{
+    position: relative;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    top: 5px;
+    left: 10px;
+}
