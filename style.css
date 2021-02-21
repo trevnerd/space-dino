@@ -21,9 +21,8 @@ body
 {    
     margin: 10;
     background-color: rgb(64, 87, 130);
-    /* background: url("space_christina.gif"); */
+    /* background: url("space.gif"); */
 }
-
 h1
 {
     position: relative;
@@ -32,8 +31,8 @@ h1
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
     text-decoration: bold;
+    font-style: italic;
 }
-
 h2
 {
     position: relative;
@@ -42,7 +41,6 @@ h2
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
 }
-
 h3
 {
     position: relative;
@@ -50,42 +48,19 @@ h3
     color: white;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
+    font-style: normal;
 }
 
-h4
-{
-    position: relative;
-
-    color: white;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-}
-/*
-p
-{
-    font: initial;
-    color: white;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
-} 
-*/
-
-button {
-    position: relative;
-    /* (500/2)-(width/2) = left*/
-    /* (500/2)-(height/2)*/
-    /* top: 480px;
-    left: 350px; */
-    /* padding-top: 10px;
-    padding-bottom: 10px; */
-    /* border: 1px solid rgb(219, 137, 137); */
-    width: 80px;
-    height: 33px;
-    /* padding: 10px 30px; */
-    border: 0px solid rgb(123, 185, 219);
+#muter {
+    position: absolute;
+    top: 60px;
+    left: 1055px;
+    width: 30px;
+    height: 30px;
+    /* border: 0px solid rgb(123, 185, 219); */
     transition: all 0.2s ease-in-out;
     margin-bottom: 10px;
-    background: url("restart.png");
+    background: url("sound.png");
     background-size: contain;
 }
 
@@ -102,7 +77,6 @@ button {
     object-fit: cover;
 }
 
-
  #game
 { /*game board */
     position: relative;
@@ -111,7 +85,7 @@ button {
     width: 800px;
     height: 800px;
     border: 10px solid rgb(20, 2, 2);
-    background: url("space_christina.gif");
+    background: url("space.gif");
 }
 .game-block {
     z-index: 1000;

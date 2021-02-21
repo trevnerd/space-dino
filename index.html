@@ -7,10 +7,12 @@
 </head>
 
 <body>
-    <h1 class="above-boarders"> <b> <i> Space Dino </i> </b> </h1>
-    <h2 class="above-boarders"> Welcome to the game >:) </h2>
-    <h4 class="above-boarders"> *How to Play* <br> Seek vengeance against the Evil Spacegulls while trying to staying in the universe! </h4>
+    <h1 class="above-boarders"> Space Dino  </h1>
+    <!-- <h2 class="above-boarders"> Welcome to the game >:) </h2> -->
+    <h3 class="above-boarders"> <i> *How to Play* </i> <br> Seek vengeance against the Evil Spacegulls while trying to staying in the universe! <br>  </h3>
     <h3>  </h3>
+    
+    <!-- Silence toggle -->
     <div id="game">
         <div id="left-block" class="game-block"></div>
         <div id="right-block" class="game-block"></div>
@@ -19,9 +21,11 @@
         <div id="highscore">HIGH SCORE: 0</div>
         <div id="score">SCORE: 0</div>
         <!-- <button class="above-boarders" id="reset" onclick="reset(false)"></button>> -->
-        <!-- <img id="game-back" src="space_christina.gif"/> -->
+        <!-- <img id="game-back" src="space.gif"/> -->
 		<img src="dino_right.png" id="dino"></div>
 	</div>
+    <button class="above-boarders" onclick="toggleMute()" id="muter"></button>
+
     <script src="stuff.js"></script>
 </body>
 </html>

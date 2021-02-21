@@ -1,21 +1,14 @@
 
 // TODO
-// enemies
-//     make the collision with player be better
-
 // power ups - LAST PRIORITY??
 //     garbage :) like literal space trash
 
 // sound FX
-// end game
-//     3 lives? - seagulls charge you to kill you x_x
-//     1 hit 1 kill
 
 //velocity constants
 const dino_vel_coeff = -2.0;
 const proj_vel_coeff = 15;
 const enemy_vel_coeff = 10;
-
 class GameElement {
     constructor(jquery_obj)
     {
@@ -133,6 +126,7 @@ var game = $('#game');
 var score = 0;
 var highscore = 0;
 var isResetting = false;
+var muted = false;
 //gameblockers
 function drawBoarders()
 {
@@ -186,8 +180,28 @@ document.addEventListener('click', function(e){
     dino.velocity.y += y_comp * dino_vel_coeff;
 
     //shoot projectile
+    if (!muted) new Audio('pew.mp3').play();
     proj_list.push(new Projectile(dino.x+(dino.width/2), dino.y+(dino.height/2), x_comp*proj_vel_coeff, y_comp*proj_vel_coeff));
 })
+
+function toggleMute()
+{
+    if (muted)
+    {
+        $('#muter').css('background-image', 'url("sound.png")');
+    }
+    else
+    {
+        $('#muter').css('background-image', 'url("nosound.png")');
+    }
+
+    setTimeout(function()
+    {
+        muted = !muted;
+    },100)
+
+}
+
 
 //enemy creation loop
 setInterval(function(){
@@ -232,9 +246,9 @@ setInterval(function(){
 setInterval(function(){
     if(isResetting) return;
     drawBoarders();
-    //console.log(dino.velocity.x, dino.velocity.y);
     dino.move(dino.velocity.y, dino.velocity.x);
-        //kill when moved off screen
+    
+    //kill dino when moved off screen
     if(dino.x+dino.width < 0
     || dino.x > game.width()
     || dino.y+dino.height < 0
@@ -245,6 +259,7 @@ setInterval(function(){
         reset(true);
     }
     
+    //move projectiles
     for(let i=0; i < proj_list.length; ++i)
     {
         //check if exits screen
@@ -264,6 +279,8 @@ setInterval(function(){
         //move projectile
         proj_list[i].move(proj_list[i].velocity.y, proj_list[i].velocity.x);
     }
+
+    //move enemies
     for(let i = 0; i < enemy_list.length; ++i)
     {
         // if(enemy_list[i].x+enemy_list[i].width < 0
@@ -300,12 +317,35 @@ setInterval(function(){
         {
             if(enemy_list[i].overlapsWith(proj_list[j]))
             {
+
+                //explosion effect
+                let explosion = $('<img/>');
+                explosion.css({
+                    position: 'absolute',
+                    width: '50px',
+                    top: `${enemy_list[i].y}px`,
+                    left: `${enemy_list[i].x}px`
+                });
+                explosion.attr('src', 'explosion.gif');
+                game.append(explosion);
+                setTimeout(function()
+                {
+                    explosion.remove();
+                }, 300);
+
                 // delete the enemy
                 //remove from screen
                 enemy_list[i].jq.remove();
                 //remove from array
                 enemy_list.splice(i, 1);
                 --i;
+
+                //delete the projectile
+                proj_list[j].jq.remove();
+                //remove from array
+                proj_list.splice(j, 1);
+
+                if (!muted) new Audio('boom.mp3').play();
                 score += 1;
                 updateScore();
                 break;
@@ -313,6 +353,7 @@ setInterval(function(){
         }
     }
 
+    // check collision between enemy and dino
     for(let i = 0; i < enemy_list.length; ++i)
     {
         if(dino.overlapsWith(enemy_list[i])) // d e a t h :O
@@ -377,3 +418,4 @@ $('#reset').offset({
     top: (game.offset().top + game.height()) + ($('#reset').height()/2),
     left: (game.offset().left + game.width()/2) - ($('#reset').width()/2)
 });
+//created by: Trevor Lopez, Dylan Ang, Christina Liu
