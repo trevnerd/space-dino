@@ -2,25 +2,54 @@
     user-select: none; /* Standard */
 }
 
-body {
-    
-    margin: 20;
-    /* background-color: rgb(219, 137, 137); */
-    background: url("space_christina.gif");
+img {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    -ms-user-drag: none;
+}
+
+body 
+{    
+    margin: 10;
+    background-color: rgb(219, 137, 137);
+    /* background: url("space_christina.gif"); */
 }
 
 h1
 {
+    position: relative;
     padding-top: 100px;
     color: rgb(255, 255, 255);
     text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration: bold;
 }
 
 h2
 {
+    position: relative;
     padding-top: 10px;
-    color: rgb(255, 255, 255);
+    color: white;
     text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h3
+{
+    position: relative;
+    padding-top: 10px;
+    color: white;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
 }
 /*
 p
@@ -32,61 +61,70 @@ p
 } 
 */
 
-#character
-{
-    /* content: "test"; */
-    width: 20px;
-    height: 50px;
-    background-color: rgb(0, 153, 255); 
-    background: url("cat.jpg");
+button {
     position: relative;
-    top: 100px;
-    left: 380px;
+    /* (500/2)-(width/2) = left*/
+    /* (500/2)-(height/2)*/
+    /* top: 480px;
+    left: 350px; */
+    /* padding-top: 10px;
+    padding-bottom: 10px; */
+    background-color: rgb(2, 4, 23);
+    border: 2px solid rgb(255, 254, 254);
+    width: 100px;
+    height: 40px;
+    /* padding: 10px 30px; */
+    transition: all 0.2s ease-in-out;
+    margin-bottom: 10px;
+    /* background: url("https://imgflip.com/s/meme/Blank-Nut-Button.jpg"); */
+}
+
+.above-boarders {
+    position: relative;
+    z-index: 1010;
 }
 
 #game-back
 {
-    position: relative;
+    position: relati1ve;
     width: 500px;
     height: 500px;
     object-fit: cover;
 }
 
+
  #game
 { /*game board */
     position: relative;
     margin: auto;
-    top: 50px;
-    width: 500px;
-    height: 500px;
-    border: 1px dashed rgb(219, 137, 137);
+    top: 5%;
+    width: 800px;
+    height: 800px;
+    border: 10px solid rgb(20, 2, 2);
+    background: url("space_christina.gif");
+}
+.game-block {
+    z-index: 1000;
+    background-color: rgb(219, 137, 137);
+    position: absolute;
 }
 
 #dino
 {
-    width: 20px;
-    height: 30px;
-    background-color: greenyellow;
+    /* width: 28px; */
+    height: 70px;
+    /* background-color: greenyellow; */
     position: absolute;
     left: 0px;
 }
 
-/* animation gradient */
-/* body {
-    opacity: 0.6;
-	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
+#score
+{
+    position: relative;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    top: 5px;
+    left: 10px;
 }
 
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-} */
