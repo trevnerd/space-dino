@@ -21,7 +21,7 @@ body
 {    
     margin: 10;
     background-color: rgb(64, 87, 130);
-    /* background: url("space.gif"); */
+    /* background: url("assets/space.gif"); */
 }
 h1
 {
@@ -53,14 +53,15 @@ h3
 
 #muter {
     position: absolute;
-    top: 60px;
-    left: 1055px;
+    z-index: 10000;
+    /* top: 60px;
+    left: 1055px; */
     width: 30px;
     height: 30px;
     /* border: 0px solid rgb(123, 185, 219); */
     transition: all 0.2s ease-in-out;
     margin-bottom: 10px;
-    background: url("sound.png");
+    background: url("assets/sound.png");
     background-size: contain;
 }
 
@@ -85,7 +86,7 @@ h3
     width: 800px;
     height: 800px;
     border: 10px solid rgb(20, 2, 2);
-    background: url("space.gif");
+    background: url("assets/space.gif");
 }
 .game-block {
     z-index: 1000;

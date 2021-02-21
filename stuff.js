@@ -64,11 +64,11 @@ class GameElement {
     {
         if(this.velocity.x >= 0)
         {
-            this.jq.attr('src', 'dino_right.gif');
+            this.jq.attr('src', 'assets/dino_right.gif');
         }
         else
         {
-            this.jq.attr('src', 'dino_left.gif');
+            this.jq.attr('src', 'assets/dino_left.gif');
         }
     }
 }
@@ -78,7 +78,7 @@ class Projectile extends GameElement{
     constructor(start_x, start_y, vel_x, vel_y){
         // make a projectile
         super($('<img/>'));
-        this.jq.attr('src', 'laser.png');
+        this.jq.attr('src', 'assets/laser.png');
         this.jq.attr('width', 13);
         game.append(this.jq);
         this.jq.css('position', 'absolute');
@@ -101,7 +101,7 @@ class Enemy extends GameElement{
         this.jq.offset({top: game.offset().top+center_start_y, left: game.offset().left+center_start_x});
         this.velocity.x = vel_x;
         this.velocity.y = vel_y;
-        this.jq.attr('src', 'spacegull_right.gif');
+        this.jq.attr('src', 'assets/spacegull_right.gif');
         this.setDirectionImage();
     }
 
@@ -180,7 +180,7 @@ document.addEventListener('click', function(e){
     dino.velocity.y += y_comp * dino_vel_coeff;
 
     //shoot projectile
-    if (!muted) new Audio('pew.mp3').play();
+    if (!muted) new Audio('assets/pew.mp3').play();
     proj_list.push(new Projectile(dino.x+(dino.width/2), dino.y+(dino.height/2), x_comp*proj_vel_coeff, y_comp*proj_vel_coeff));
 })
 
@@ -188,11 +188,11 @@ function toggleMute()
 {
     if (muted)
     {
-        $('#muter').css('background-image', 'url("sound.png")');
+        $('#muter').css('background-image', 'url("assets/sound.png")');
     }
     else
     {
-        $('#muter').css('background-image', 'url("nosound.png")');
+        $('#muter').css('background-image', 'url("assets/nosound.png")');
     }
 
     setTimeout(function()
@@ -326,7 +326,7 @@ setInterval(function(){
                     top: `${enemy_list[i].y}px`,
                     left: `${enemy_list[i].x}px`
                 });
-                explosion.attr('src', 'explosion.gif');
+                explosion.attr('src', 'assets/explosion.gif');
                 game.append(explosion);
                 setTimeout(function()
                 {
@@ -345,7 +345,7 @@ setInterval(function(){
                 //remove from array
                 proj_list.splice(j, 1);
 
-                if (!muted) new Audio('boom.mp3').play();
+                if (!muted) new Audio('assets/boom.mp3').play();
                 score += 1;
                 updateScore();
                 break;
@@ -386,7 +386,7 @@ function reset(onDeath)
 
     dino.jq.hide()
     let image = document.createElement("img");
-    image.src = "gameover.png";
+    image.src = "assets/gameover.png";
     //image.width = "500px";
     game.append(image);
 
@@ -410,8 +410,8 @@ function updateScore()
 }
 
 document.addEventListener('mousemove', function(e){
-    if(dino.xCenter < e.pageX) dino.jq.attr('src', 'dino_right.png');
-    else dino.jq.attr('src', 'dino_left.png');
+    if(dino.xCenter < e.pageX) dino.jq.attr('src', 'assets/dino_right.png');
+    else dino.jq.attr('src', 'assets/dino_left.png');
 })
 
 $('#reset').offset({

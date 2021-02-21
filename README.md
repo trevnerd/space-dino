@@ -8,4 +8,4 @@ Click anywhere on the page to fire a laser in that direction. Lasers push our di
 
 Sound Effects can be toggled on or off by clicking on the sound icon.
 
-<img src="sound.png" alt="sound" width="50px"></img>
+<img src="assets/sound.png" alt="sound" width="50px"></img>
